@@ -1,0 +1,59 @@
+
+-------------------------------------------------------Aitzaz Ahmad-----------------------------------------------------------------
+-------------------------------------------------------i180589---------------------------------------------------------------------
+
+Lets suppose length of string = n;
+then length of substring to be searched = m;
+Size of qgrams can be anything in a certain range. lets denote it by q such that 1<q<=m
+No of qgrams will also be dependent on q. lets denote it by Q
+
+-----------------------------------------------------Algorithm#01----------------------------------------------------------------------
+
+In this algo we will need to compute shift table, and fingerprint fx for each qgram which can be calculated on run time. And futhermore we will need to compare the substring with a part of the substring.
+
+To compute shift tabe we will have the time complexity of O(Qq.q!)... 
+Explanation:
+O(q!) will be consumed in initiualizing the shift table array. and then for each q-gram we will calculate lx which will consume the time of O(Qq). And then we will assign the value at that index of shift table. so total time complexity is O(q!) * (Qq.q!)
+
+For checking if the two substring are same or not we will have the time complexity of O(m^3) where m=length of the subsring
+Explanation:
+	We will have to calculate mew for that particular piece of string which we want to compare... That will have the complexity of O(m^2). After that we will compare each index seperately which will consume time O(m) so total time complexity is O(m) * O(m^2)= O(m^3)
+
+To compute f(x) for each q_gram we will have following time complexity
+Explanation:
+	For calculating F(x) we will firstly  calculate mew for a substring of length q so time complexity of this step will be O(q^2). Now for each we will find dactorial of that mew value which will have the time complexity of calculating facorial. Lets call it O(k). So total time complexity will be O(k.q^3).
+
+In Algorithm_1 we have one loop which will run for n times.
+	Inside the loop other than calculatig f(x) and verifying Is_same() all the steps have time complexity of O(1);
+	Time complexity of f(x) is O((k.q^3)		
+	Time complexity of Is_same is O(m^3)
+Total time complexity will be O(n) * O(k.q^3) + O(n) * O(m^3)
+			= max( O(n) * O(k,q^3), O(nm^3) ) -------------------------------------> O(nm^3)=TIME COMPLEXITY
+
+
+
+-----------------------------------------------------Algorithm#02----------------------------------------------------------------------
+
+In this algo we will also use pi along with other things.
+
+Time complexity of calculating Pi is explained below
+Explanation:
+
+For calculating Pi we will firstly divide the the string/substring array into prefix or suffix with worst case length of (n/2). Now we will compute mew for suffix and prefix seperately which will consume time of O((n/2)^2). Now we will compare the indexes with time complexity of O(n/2). So total time complexity is ((n/2)^3)
+
+In this algorithm we have 1 loop running for n times.
+	Inside the loop we have two more loops running for indefinate times but in one of them we are calulating f(x) and in the other one we are calculating is_same.
+		First inner loop can run for O(n) times in worst case assuming i is starting from 1 and ends at n.
+		In each iteration we are also calculating f(x) which has time = O(k.q^3)
+	Inside the 2nd loop 
+		It will run for m times in worst case. 
+		In each step we are having is_same so its time complexity will be O(m^2)
+	All other steps have constant time.
+
+Time complexity of algo1 == Time complexity of Outer loop * (Time complexity of 1st inner loop + Time complexity of 2nd inner loop)
+				=O(n) * [ max { O(n) * O(k.q^3), O(m^3)} ]
+				=O(nm^3)--------------->>>TIME COMPLEXITY
+
+
+
+---------------------------------------------------------END----------------------------------------------------------------------------------------------
